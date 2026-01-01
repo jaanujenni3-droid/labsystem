@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Doctor Dashboard - GSSS Hospital</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { text-align: center; color: #d016b7; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    table, th, td { border: 1px solid #aaa; }
+    th, td { padding: 10px; text-align: left; }
+    th { background-color: #2c3e50; color: rgb(39, 198, 207); }
+  </style>
+</head>
+<body>
+  <h1>GSSS Hospital - Doctor Dashboard</h1>
+  <h3>All Appointments</h3>
+
+  <table id="appointmentTable">
+    <tr>
+      <th>Patient Name</th>
+      <th>Pre-Appointment Details</th>
+      <th>Type of Test</th>
+      <th>Doctor</th>
+      <th>Date</th>
+      <th>Time</th>
+    </tr>
+  </table>
+
+  <script>
+    // Fetch appointments from localStorage
+    const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+    const table = document.getElementById("appointmentTable");
+
+    if(appointments.length === 0){
+      const row = table.insertRow();
+      const cell = row.insertCell(0);
+      cell.colSpan = 6;
+      cell.innerText = "No appointments yet!";
+      cell.style.textAlign = "center";
+      cell.style.color = "red";
+    }
+
+    // Populate table with appointments
+    appointments.forEach(app => {
+      const row = table.insertRow();
+      row.insertCell(0).innerText = app.name;
+      row.insertCell(1).innerText = app.preAppointment;
+      row.insertCell(2).innerText = app.testType;
+      row.insertCell(3).innerText = app.doctor;
+      row.insertCell(4).innerText = app.date;
+      row.insertCell(5).innerText = app.time;
+    });
+  </script>
+</body>
+</html>

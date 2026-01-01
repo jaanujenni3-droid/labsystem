@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Patient Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Welcome to GSSS Hospital, Patient!</h1>
+  
+  <h3>Book an Appointment</h3>
+  <form id="appointmentForm">
+    Name: <input type="text" id="name" required><br><br>
+
+    Pre-appointment Details:<br>
+    <textarea id="preAppointment" placeholder="Enter your details" required></textarea><br><br>
+
+    Type of Test: 
+    <select id="testType" required>
+      <option value="">Select Test</option>
+      <option value="Blood Test">Blood Test</option>
+      <option value="X-Ray">X-Ray</option>
+      <option value="MRI">MRI</option>
+      <option value="COVID-19 Test">COVID-19 Test</option>
+    </select><br><br>
+
+    Select Doctor:
+    <select id="doctor" required>
+      <option value="">Select Doctor</option>
+      <option value="Dr. Smith">Dr. Smith</option>
+      <option value="Dr. Johnson">Dr. Johnson</option>
+      <option value="Dr. Williams">Dr. Williams</option>
+    </select><br><br>
+
+    Select Date: <input type="date" id="appointmentDate" required><br><br>
+    Select Time: <input type="time" id="appointmentTime" required><br><br>
+
+    <button type="submit">Submit Appointment</button>
+  </form>
+
+  <p id="successMsg" style="color: green;"></p>
+
+  <script>
+    // Store appointments in localStorage
+    const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+    const form = document.getElementById("appointmentForm");
+    const successMsg = document.getElementById("successMsg");
+
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+
+      const appointment = {
+        name: document.getElementById("name").value,
+        preAppointment: document.getElementById("preAppointment").value,
+        testType: document.getElementById("testType").value,
+        doctor: document.getElementById("doctor").value,
+        date: document.getElementById("appointmentDate").value,
+        time: document.getElementById("appointmentTime").value
+      };
+
+      appointments.push(appointment);
+      localStorage.setItem('appointments', JSON.stringify(appointments));
+
+      successMsg.innerText = "Appointment submitted successfully!";
+      form.reset();
+    });
+  </script>
+</body>
+</html>
